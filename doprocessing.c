@@ -15,13 +15,13 @@ void doprocessing (int sock) {
       exit(1);
    }
    
-	int read_size;
-	int i , p , num ;
-	int no[10] ;
+    int read_size;
+    int i , p , num ;
+    int no[10] ;
     int guess[4] , tmp , counterA , counterB , j , k ,count=1;
  
      while(count>0)
-	{
+    {
 	    for ( i = 0 ; i < 10 ; ++i )
 	            no[i] = i;
 	
@@ -39,13 +39,13 @@ void doprocessing (int sock) {
 	            printf("%d",no[i]);
 	    printf("\n");
 	    bzero(my_buffer,256);
-		bzero(client_buffer,256);	
+   	    bzero(client_buffer,256);	
 	    sprintf(my_buffer,"Game%d:Please enter your guess number : ",count);
 	    if((n=write(sock , my_buffer , strlen(my_buffer)))<0)
 	    {
 	      perror("ERROR writing to socket");
 	      exit(1);		
-		} 
+	    } 
 	    int count2=0;
 	    while( (read_size = recv(sock , client_buffer , 256 , 0)) > 0)
 	    {
@@ -68,45 +68,45 @@ void doprocessing (int sock) {
 	
 	        if( counterA == 4 )
 	        {
-               sprintf(my_buffer,"Right number!!");
-			    if((n=write(sock , my_buffer , strlen(my_buffer)))<0)
-			    {
-			      perror("ERROR writing to socket");
-			      exit(1);		
-				} 
-               count++;
-               break;
+                  sprintf(my_buffer,"Right number!!");
+	          if((n=write(sock , my_buffer , strlen(my_buffer)))<0)
+	          {
+	            perror("ERROR writing to socket");
+		    exit(1);		
+		  } 
+                  count++;
+                  break;
 	        } 
-			else if(count2>4)
-			{
-               sprintf(my_buffer,"Game over!!ANS is:%d%d%d%d",no[3],no[2],no[1],no[0]);
-			    if((n=write(sock , my_buffer , strlen(my_buffer)))<0)
-			    {
-			      perror("ERROR writing to socket");
-			      exit(1);		
-				} 
-			   count++;
-               break;				
-			}
-			else {
-	                sprintf(my_buffer,"Hint%d:%dA%dB",++count2,counterA,counterB);
-				    if((n=write(sock , my_buffer , strlen(my_buffer)))<0)
-				    {
-				      perror("ERROR writing to socket");
-				      exit(1);		
-					} 			
-	            }
-	            //Send the message back to client
-		        bzero(my_buffer,256);
-			    bzero(client_buffer,256);	
-			    bzero(buffer,100);
-	            sprintf(buffer,"\nGame%d:Please enter your guess number : ",count);
-	            strcat(my_buffer,buffer);
-			    if((n=write(sock , my_buffer , strlen(my_buffer)))<0)
-			    {
-			      perror("ERROR writing to socket");
-			      exit(1);		
-				} 
-		    }
+		  else if(count2>4)
+		{
+                 sprintf(my_buffer,"Game over!!ANS is:%d%d%d%d",no[3],no[2],no[1],no[0]);
+	         if((n=write(sock , my_buffer , strlen(my_buffer)))<0)
+	          {
+	            perror("ERROR writing to socket");
+	            exit(1);		
+		  } 
+	          count++;
+                  break;				
+		}
+		else {
+	            sprintf(my_buffer,"Hint%d:%dA%dB",++count2,counterA,counterB);
+		    if((n=write(sock , my_buffer , strlen(my_buffer)))<0)
+		    {
+		      perror("ERROR writing to socket");
+		      exit(1);		
+		    } 			
+	        }
+	        //Send the message back to client
+		bzero(my_buffer,256);
+	        bzero(client_buffer,256);	
+	        bzero(buffer,100);
+	        sprintf(buffer,"\nGame%d:Please enter your guess number : ",count);
+	        strcat(my_buffer,buffer);
+	        if((n=write(sock , my_buffer , strlen(my_buffer)))<0)
+		{
+	           perror("ERROR writing to socket");
+		   exit(1);		
+	        } 
+             }
 	}   
 }
