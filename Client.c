@@ -43,11 +43,6 @@ int main(int argc , char *argv[])
 	      return 1;
 	   }
 	   //Receive a reply from the server
-	   if( recv(socket_desc, server_reply , 2000 , 0) < 0)
-	   {
-	      puts("recv failed");
-	   }
-	   puts(server_reply);
 	   memset(server_reply,0,sizeof(server_reply));
 	   //fflush(stdin);
 	   if( recv(socket_desc, server_reply , 2000 , 0) > 0)
@@ -55,7 +50,6 @@ int main(int argc , char *argv[])
 	       puts(server_reply); 
 	   }
 	   memset(message, 0, sizeof(message));
-	   memset(server_reply,0,sizeof(server_reply));
 	}
 	return 0;
 }
